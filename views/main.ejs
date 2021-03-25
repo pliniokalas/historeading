@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <%- include("header") %>
+
+  <body>
+    <%- include("navbar") %>
+    <% if (view === "books") { %>
+      <%- include("allBooks", { books }) %>
+    <% } else { %>
+      <%- include("addBooks", { searchResults }) %>
+    <% } %>
+  </body>
+</html>

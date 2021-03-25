@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<h1 class="headerTitle">Search the Google Books library</h1>
+<form class="searchForm" method="POST">
+  <input name="searchString" type="text" />
+  <button type="submit">Search</button>
+</form>
+
+<ul class="searchResults">
+  <% for (let book of searchResults) { %>
+  <li>
+    <form class="addBookForm" method="POST">
+      <input type="image" name="thumbnail" src="<%= book.volumeInfo.imageLinks?.smallThumbnail %>" alt="thumbnail" />
+      <fieldset>
+        <input type="text" name="title" value="<%= book.volumeInfo.title %>" readonly />
+        <input type="text" name="authors" value="<%= book.volumeInfo.authors %>" readonly />
+        <input type="text" name="publisher" value="<%= book.volumeInfo.publisher %>" readonly />
+        <input type="text" name="pageCount" value="<%= book.volumeInfo.pageCount %>" readonly />
+        <input type="text" name="language" value="<%= book.volumeInfo.language %>" readonly />
+        <button type="submit">Add book</button>
+      </fieldset>
+    </form>
+  </li>
+  <% } %>
+</ul>

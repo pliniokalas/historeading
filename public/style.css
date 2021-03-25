@@ -1,0 +1,229 @@
+
+
+:root {
+  --color_1: #613B78;
+  --color_2: #AA22FB; 
+  --color_3: #533a67; 
+  --color_4: #362C3C; 
+  --color_5: #232025; 
+  --color_6: #A3CC4B;
+  --color_7: #FFD71A;
+}
+
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ====================================== */
+
+body {
+  background-color: var(--color_5);
+  color: var(--color_3);
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar a {
+  padding: 0.5rem;
+  margin: 0 0.2rem;
+  background-color: var(--color_3);
+  border-radius: 3px;
+  text-decoration: none;
+  color: var(--color_5);
+}
+
+.navbar a:first-child {
+  border-radius: 3px 3px 3px 15px;
+}
+
+.navbar a:last-child {
+  border-radius: 3px 3px 15px 3px;
+}
+
+.navbar a:hover {
+  opacity: 0.8;
+}
+
+.navbar a:active {
+}
+
+/* all books ======================= */
+
+.headerCombo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+  position: relative;
+}
+
+.headerTitle {
+  text-align: center;
+}
+
+.addBook {
+  width: 2rem;
+  height: 2rem;
+  display: block;
+  margin: 0 1rem;
+  background-color: var(--color_3);
+  border-radius: 100%;
+  position: absolute;
+  right: 10%;
+}
+
+.bookList li {
+  margin: 5px 0;
+}
+
+.bookList li:hover .bookForm button {
+  opacity: 1;
+  transform: translateX(0) !important;
+}
+
+.bookForm {
+  width: 80%;
+  margin: 0 auto;
+  padding: 1rem;
+  padding-right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position:relative;
+  border-radius: 3px;
+  border-right: 3px solid var(--color_6);
+  background-color: var(--color_3);
+  color: var(--color_5);
+}
+
+.bookForm .title {
+  font-size: larger;
+  font-weight: 700;
+}
+
+.bookForm .author {
+  font-size: small;
+}
+
+.bookForm .pages {
+  font-size: small;
+}
+
+.bookForm button {
+  background-color: var(--color_5); 
+  border: none;
+  opacity: 0;
+  transition: opacity ease 300ms, transform ease 300ms;
+}
+
+.bookForm #remButton {
+  position: absolute;
+  left: -3rem; 
+  background-color: var(--color_7);
+  border-radius: 100%;
+  width: 2rem;
+  height: 2rem;
+  transform: translateX(30px);
+}
+
+.bookForm .detailsButton {
+  background-color: var(--color_6);
+  border-radius: 5rem 0 0 5rem; 
+  padding: 0.5rem 1rem;
+  font-family: serif;
+  font-size: x-small;
+  font-weight: 700;
+}
+
+/* book details ====================== */
+
+.detailsSheet {
+  width: 75%;
+  margin: 0 auto; 
+  display: flex;
+  align-items: flex-start;
+}
+
+.detailsSheet img {
+  width: 8rem;
+  height: 10rem;
+  margin: 0 0.5rem;
+  background-color: var(--color_3);
+}
+
+.detailsPanel {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.detailsPanel span {
+  margin: 0.5rem 0.5rem 0 0;
+  padding: 0.5rem;
+  font-size: smaller;
+  font-family: sans-serif;
+  background-color: var(--color_3);
+  color: var(--color_4);
+}
+
+/* all books ======================= */
+
+.searchForm {
+  width: max-content;
+  margin: 1rem auto;
+}
+
+.searchForm input {
+  background-color: var(--color_3);
+  border: none;
+  border-radius: 3px;
+  padding: 0.5rem;
+}
+
+.searchForm button {
+  border: none;
+  border-radius: 3px;
+  padding: 0.5rem;
+  background-color: var(--color_3);
+  color: var(--color_5);
+  font-family: serif;
+  font-weight: 700;
+  font-size: smaller;
+}
+
+.searchResults li {
+  margin: 0.5rem;
+  background-color: var(--color_3);
+}
+
+.addBookForm {
+  display: flex;
+  align-items: flex-start;
+}
+
+.addBookForm fieldset {
+  border: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.addBookForm input {
+  padding: 0.5rem;
+  margin: 0 0.5rem 0.5rem 0;
+  background-color: var(--color_5);
+  color: var(--color_3);
+  border: none;
+}

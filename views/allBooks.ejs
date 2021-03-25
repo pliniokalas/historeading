@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<div class="headerCombo">
+  <h1 class="headerTitle">These are your books</h1>
+  <a class="addBook" href="/add"></a>
+</div>
+
+<ul class="bookList">
+  <% for(let book of books) { %>
+  <li>
+    <form class="bookForm" method="GET" action="/books/<%= book._id %>">
+      <span class="title"><%= book.title %></span>
+      <span class="author">By: <%= book.authors %></span>
+      <span class="pages"><%= book.pageCount %> pages</span>
+
+      <button class="detailsButton" type="submit">Details</button>
+      <button id="remButton" value="<%= book._id %>" type="button"></button>
+    </form>
+  </li>
+  <% } %>
+</ul>
+
+
+<script>
+  const remButtons = document.querySelectorAll("#remButton");
+  if (remButtons.length) 
+    for (let button of remButtons) {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = e.target.value;
+
+        fetch("/books", { 
+          method: "delete",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id }),
+        })
+          .then(() => window.location.reload())
+          .catch((error) => console.log(error));
+      });
+    }
+</script>
+

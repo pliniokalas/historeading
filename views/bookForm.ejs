@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<form method="POST">
+  <input name="title" type="text" placeholder="title" />
+  <input name="desc" type="text" placeholder="desc" />
+
+  <% if (view === "books") { %>
+    <button type="submit">Add</button>
+  <% } else if (view === "details") { %>
+    <button id="editButton" type="submit" value="<%= _id %>">Edit</button>
+  <% } %>
+</form>
+
+<script>
+  const getTitle = () => document.querySelector("input[name='title'").value;
+  const getDesc = () => document.querySelector("input[name='desc']").value;
+
+  const edit = document.querySelector("#editButton");
+  if (edit)
+    edit.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const book = { 
+        _id: e.target.value,
+        title: getTitle(),
+        desc: getDesc(),
+      };
+
+      fetch(`/books/${book._id}`, { 
+        method: "put", 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(book),
+      })
+        .then(() => window.location.reload())
+        .catch((error) => console.log(error));
+    });
+</script>
+

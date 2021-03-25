@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <%- include("header") %>
+  <body>
+    <%- include("navbar") %>
+
+    <h1 class="headerTitle"><%= book.title %></h1>
+    <div class="detailsSheet">
+      <img src="<%= book.thumbnail %>" alt="thumbnail" />
+
+      <div class="detailsPanel">
+        <span>By: <%= book.authors %></span>
+        <span>Publisher: <%= book.publisher %></span>
+        <span><%= book.pageCount %> pages</span>
+        <span>Language: <%= book.language %></span> 
+      </div>
+    </div>
+  </body>
+</html>
