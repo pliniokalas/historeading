@@ -39,8 +39,9 @@ function addBook(bookForm) {
 async function editBook(edit) {
   let changedBook = await Book.findOne({ _id: edit._id });
   // this only works if mutating every property individually...
-  changedBook.title = edit.title; 
-  changedBook.desc = edit.desc; 
+  changedBook.readingStart = edit.readingStart;
+  changedBook.readingEnd = edit.readingEnd;
+  changedBook.readTime = getDays(edit.readingStart, edit.readingEnd);
   return await changedBook.save();
 }
 
@@ -49,18 +50,28 @@ async function remBook({ id }) {
   removedBook.remove();
 }
 
+function getDays(from, to) {
+  const MS_PER_DAY = 1000 * 60 * 60 * 24;
+  const a = new Date(from);
+  const b = new Date(to);
+  const utcA = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const utcB = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utcB - utcA) / MS_PER_DAY);
+}
+
 /* ROUTES ===================================== */
 
 // read home page
 app.get("/", (req, res) => {
-  res.render("home.ejs", {});
+  res.redirect("/books");
 });
 
 // read, books page
 app.get("/books", async (req, res) => {
   getBooks()
-    .then((books) => res.render("main.ejs", { books, view: "books" }))
-    .catch((error) => console.log(error));
+    .then((books) => res.render("allBooks.ejs", { books }))
+      .catch((error) => console.log(error));
 });
 
 // create, books page
@@ -85,37 +96,40 @@ app.get("/books/:bookId", async (req, res) => {
 });
 
 // update, details page
-app.put("/books/:bookId", (req, res) => {
+app.post("/books/:bookId", async (req, res) => {
   editBook({ _id: req.params.bookId, ...req.body })
-    .then(() => res.sendStatus(200))
+    .then((resp) => res.redirect(`/books/${req.params.bookId}`))
     .catch((error) => console.log(error));
 });
 
 // read, add book page
-app.get("/add", async (req, res) => {
-  res.render("main.ejs", { view: "add", searchResults: [] });
+app.get("/search", async (req, res) => {
+  res.render("addBooks.ejs", { searchResults: [], searchString: "" });
 });
 
-// read, add book page, request from API
-app.post("/add", async (req, res) => {
-  // if this is a search
-  if (req.body.searchString ) {
-    const { searchString } = req.body;
-    const keywords = searchString.split(" ");
-    const query = keywords.join("+"); 
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${query}`;
+// read, add book page, search
+app.post("/search", async (req, res) => {
+  const { searchString } = req.body;
+  const keywords = searchString.split(" ");
+  const query = keywords.join("+"); 
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${query}`;
 
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        res.render("main.ejs", { view: "add", searchResults: data.items || [] })
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      res.render("addBooks.ejs", { 
+        searchResults: data.items || [],
+        searchString
       })
-      .catch((error) => console.log(error));
-  } else {
-    addBook(req.body)
-      .then(() => res.sendStatus(200))
-      .catch((error) => console.log(error));
-  }
+    })
+    .catch((error) => console.log(error));
+});
+
+// create, add searched book
+app.post("/search/add", async (req, res) => {
+  addBook(req.body)
+    .then(() => res.redirect("/search"))
+    .catch((error) => console.log(error));
 });
 
 /* =========================================== */

@@ -1,41 +1,50 @@
 <!DOCTYPE html>
-<div class="headerCombo">
-  <h1 class="headerTitle">These are your books</h1>
-  <a class="addBook" href="/add"></a>
-</div>
+<html>
+  <%- include("head") %>
+  <%- include("fouc") %>
+  <body class="no_js" style="opacity: 0">
+    <%- include("navbar") %>
 
-<ul class="bookList">
-  <% for(let book of books) { %>
-  <li>
-    <form class="bookForm" method="GET" action="/books/<%= book._id %>">
-      <span class="title"><%= book.title %></span>
-      <span class="author">By: <%= book.authors %></span>
-      <span class="pages"><%= book.pageCount %> pages</span>
+    <div class="headerCombo">
+      <h1 class="headerTitle">These are your books</h1>
+      <a class="gotoAddBook" href="/search">New</a>
+    </div>
 
-      <button class="detailsButton" type="submit">Details</button>
-      <button id="remButton" value="<%= book._id %>" type="button"></button>
-    </form>
-  </li>
-  <% } %>
-</ul>
+    <ul class="bookList">
+      <% for(let book of books) { %>
+      <li>
+        <form class="bookForm" method="GET" action="/books/<%= book._id %>">
+          <h3 class="title"><%= book.title %></h3>
+          <% if (book.subtitle) { %><span class="sub"><%= book.subtitle %></span><% } %>
+          <% if (book.authors) { %><span class="author"><%= "By " + book.authors %></span><% } %>
+          <% if (book.pageCount) { %><span class="pages"><%= book.pageCount + " pages" %></span><% } %> 
+
+          <button class="detailsButton" type="submit">Details</button>
+          <button id="remButton" value="<%= book._id %>" type="button"></button>
+        </form>
+      </li>
+      <% } %>
+    </ul>
 
 
-<script>
-  const remButtons = document.querySelectorAll("#remButton");
-  if (remButtons.length) 
-    for (let button of remButtons) {
-      button.addEventListener("click", (e) => {
-        e.preventDefault();
-        const id = e.target.value;
+    <script>
+      const remButtons = document.querySelectorAll("#remButton");
+      if (remButtons.length) 
+        for (let button of remButtons) {
+          button.addEventListener("click", (e) => {
+            e.preventDefault();
+            const id = e.target.value;
 
-        fetch("/books", { 
-          method: "delete",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id }),
-        })
-          .then(() => window.location.reload())
-          .catch((error) => console.log(error));
-      });
-    }
-</script>
+            fetch("/books", { 
+              method: "delete",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id }),
+            })
+              .then(() => window.location.reload())
+              .catch((error) => console.log(error));
+          });
+        }
+    </script>
+  </body>
+</html>
 

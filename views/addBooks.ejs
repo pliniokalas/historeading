@@ -1,24 +1,49 @@
 <!DOCTYPE html>
-<h1 class="headerTitle">Search the Google Books library</h1>
-<form class="searchForm" method="POST">
-  <input name="searchString" type="text" />
-  <button type="submit">Search</button>
-</form>
+<html>
+  <%- include("head") %>
+  <%- include("fouc") %>
+  <body class="no_js" style="opacity: 0">
+    <%- include("navbar") %>
 
-<ul class="searchResults">
-  <% for (let book of searchResults) { %>
-  <li>
-    <form class="addBookForm" method="POST">
-      <input type="image" name="thumbnail" src="<%= book.volumeInfo.imageLinks?.smallThumbnail %>" alt="thumbnail" />
-      <fieldset>
-        <input type="text" name="title" value="<%= book.volumeInfo.title %>" readonly />
-        <input type="text" name="authors" value="<%= book.volumeInfo.authors %>" readonly />
-        <input type="text" name="publisher" value="<%= book.volumeInfo.publisher %>" readonly />
-        <input type="text" name="pageCount" value="<%= book.volumeInfo.pageCount %>" readonly />
-        <input type="text" name="language" value="<%= book.volumeInfo.language %>" readonly />
-        <button type="submit">Add book</button>
-      </fieldset>
+    <h1 class="headerTitle">Search the Google Books library</h1>
+    <form class="searchForm" method="POST">
+      <input name="searchString" type="text" />
+      <button type="submit">Search</button>
     </form>
-  </li>
-  <% } %>
-</ul>
+
+    <ul class="searchResults">
+      <% if (searchString) { %><li><p class="searchString">"<%= searchString %>"</p></li><% } %>
+
+      <% for (let { volumeInfo } of searchResults) { %>
+      <li>
+        <form class="addBookForm" method="POST" action="/search/add">
+          <img src="<%= volumeInfo.imageLinks?.smallThumbnail %>" alt="no cover" />
+          <div>
+            <div class="displayDataTitle">
+              <p class="title"><%= volumeInfo.title %></p>
+              <button class="addBookButton" type="submit">Add book</button>
+            </div>
+            <div class="displayDataDesc">
+              <% if (volumeInfo.subtitle) { %><p class="sub"><%= volumeInfo.subtitle %> | </p><% } %>
+              <% if (volumeInfo.authors) { %><p class="authors"><%= "By " + volumeInfo.authors %> | </p><% } %>
+              <% if (volumeInfo.publisher) { %><p class="pub"><%= volumeInfo.publisher %> | </p><% } %>
+              <% if (volumeInfo.pageCount) { %><p class="pages"><%= volumeInfo.pageCount + " pages"%> | </p><% } %>
+              <% if (volumeInfo.language) { %><p class="lang"><%= "Lang: " + volumeInfo.language %></p><% } %>
+            </div>
+          </div>
+
+          <fieldset class="sendData">
+            <input type="url" name="thumbnail" value="<%= volumeInfo.imageLinks?.smallThumbnail %>" />
+            <input type="text" name="title" value="<%= volumeInfo.title %>" readonly />
+            <input type="text" name="subtitle" value="<%= volumeInfo.subtitle %>" readonly />
+            <input type="text" name="authors" value="<%= volumeInfo.authors %>" readonly />
+            <input type="text" name="publisher" value="<%= volumeInfo.publisher %>" readonly />
+            <input type="text" name="pageCount" value="<%= volumeInfo.pageCount %>" readonly />
+            <input type="text" name="language" value="<%= volumeInfo.language %>" readonly />
+          </fieldset>
+        </form>
+      </li>
+      <% } %>
+    </ul>
+  </body>
+</html>

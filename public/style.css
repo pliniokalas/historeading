@@ -1,15 +1,15 @@
 
 
 :root {
-  --color_1: #613B78;
-  --color_2: #AA22FB; 
-  --color_3: #533a67; 
+  --color_1: #c1afd0; 
+  --color_2: red; /* #AA22FB; */
+  --color_3: #523e62; 
   --color_4: #362C3C; 
   --color_5: #232025; 
   --color_6: #A3CC4B;
   --color_7: #FFD71A;
+  --color_8: #FFDF46; 
 }
-
 
 ul {
   padding: 0;
@@ -20,14 +20,37 @@ li {
 }
 
 button {
+  padding: 0.5rem;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
+button:hover {
+  background-color: var(--highlight);
+}
+
+a {
+  text-decoration: none;
+  color: var(--secondary);
+}
+
+.defaultButton {
+  --primary: transparent; 
+  --secondary: var(--color_1);
+  --highlight: var(--color_4);
 }
 
 /* ====================================== */
 
 body {
+  margin: 0 auto;
+  max-width: 60rem;
   background-color: var(--color_5);
-  color: var(--color_3);
+  color: var(--color_1);
+  font-family: sans-serif;
 }
 
 
@@ -37,24 +60,16 @@ body {
 }
 
 .navbar a {
+  --primary: var(--color_4);
+  --secondary: var(--color_1);
+
   padding: 0.5rem;
   margin: 0 0.2rem;
-  background-color: var(--color_3);
   border-radius: 3px;
-  text-decoration: none;
-  color: var(--color_5);
-}
-
-.navbar a:first-child {
-  border-radius: 3px 3px 3px 15px;
-}
-
-.navbar a:last-child {
-  border-radius: 3px 3px 15px 3px;
 }
 
 .navbar a:hover {
-  opacity: 0.8;
+  background-color: var(--primary);
 }
 
 .navbar a:active {
@@ -71,18 +86,26 @@ body {
 }
 
 .headerTitle {
+  font-family: serif;
   text-align: center;
+  color: var(--color_8);
 }
 
-.addBook {
-  width: 2rem;
-  height: 2rem;
-  display: block;
-  margin: 0 1rem;
-  background-color: var(--color_3);
-  border-radius: 100%;
+.gotoAddBook {
+  --primary: var(--color_4);
+  --secondary: var(--color_5);
+  --highlight: var(--color_1);
+
   position: absolute;
   right: 10%;
+  padding: 0.5rem;
+  border: 1px solid var(--primary);
+  border-radius: 5rem;
+  color: var(--highlight);
+}
+
+.gotoAddBook:hover {
+  background-color: var(--primary);
 }
 
 .bookList li {
@@ -91,6 +114,7 @@ body {
 
 .bookList li:hover .bookForm button {
   opacity: 1;
+  width: 5rem;
   transform: translateX(0) !important;
 }
 
@@ -98,51 +122,62 @@ body {
   width: 80%;
   margin: 0 auto;
   padding: 1rem;
-  padding-right: 0;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   position:relative;
   border-radius: 3px;
-  border-right: 3px solid var(--color_6);
   background-color: var(--color_3);
-  color: var(--color_5);
+}
+
+.bookForm:hover {
+  box-shadow: inset 0px -3px 0 0 var(--color_4), inset 0px 3px 0 0 var(--color_4); 
+}
+
+.bookForm:hover .title {
+  color: var(--color_8);
+}
+
+.bookForm > * {
+  margin: 0 0.5rem 0.5rem 0;
+  font-size: small;
 }
 
 .bookForm .title {
-  font-size: larger;
-  font-weight: 700;
-}
-
-.bookForm .author {
-  font-size: small;
-}
-
-.bookForm .pages {
-  font-size: small;
+  flex: 1 1 100%;
+  margin: 0 0 0.5rem 0;
+  font-family: serif;
+  font-size: unset;
 }
 
 .bookForm button {
-  background-color: var(--color_5); 
-  border: none;
+  position: absolute;
+  margin: 0;
   opacity: 0;
-  transition: opacity ease 300ms, transform ease 300ms;
+  color: var(--color_5);
+  box-shadow: 0 0 4px 0 #00000080;
+  transition: opacity ease 300ms, transform ease 300ms, width 500ms ease;
 }
 
-.bookForm #remButton {
-  position: absolute;
+#remButton {
+  --primary: var(--color_1);
+  --highlight: var(--color_8);
+
   left: -3rem; 
-  background-color: var(--color_7);
-  border-radius: 100%;
   width: 2rem;
   height: 2rem;
+  border-radius: 100%;
   transform: translateX(30px);
 }
 
-.bookForm .detailsButton {
-  background-color: var(--color_6);
+.detailsButton {
+  --primary: var(--color_1);
+  --highlight: var(--color_8);
+
+  height: 80%;
+  right: 0;
+  width: 0rem;
   border-radius: 5rem 0 0 5rem; 
-  padding: 0.5rem 1rem;
   font-family: serif;
   font-size: x-small;
   font-weight: 700;
@@ -151,79 +186,152 @@ body {
 /* book details ====================== */
 
 .detailsSheet {
-  width: 75%;
-  margin: 0 auto; 
   display: flex;
   align-items: flex-start;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  background-color: var(--color_4);
 }
 
 .detailsSheet img {
   width: 8rem;
   height: 10rem;
-  margin: 0 0.5rem;
+  margin-right: 0.5rem;
   background-color: var(--color_3);
+  border-radius: 5px;
 }
 
 .detailsPanel {
   display: flex;
-  flex-wrap: wrap;
-  width: 100%;
+  flex-direction: column;
 }
 
 .detailsPanel span {
-  margin: 0.5rem 0.5rem 0 0;
+  width: -moz-fit-content; /* TODO this isn't the best */
+  margin: 0 0.5rem 0.5rem 0;
   padding: 0.5rem;
-  font-size: smaller;
-  font-family: sans-serif;
-  background-color: var(--color_3);
-  color: var(--color_4);
+  border: 1px solid var(--color_3);
+  border-radius: 5px;
 }
 
-/* all books ======================= */
+.userStats {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--color_3);
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.userStats > * {
+  padding: 0.5rem;
+  margin-right: 0.5rem; 
+  border-radius: 5px;
+}
+
+.userStats span:hover, .userStats input[type="date"]:hover {
+  background-color: var(--color_4);
+}
+
+.userStats input[type="date"] {
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--color_5);
+  color: var(--color_1);
+}
+
+/* add books ======================= */
 
 .searchForm {
   width: max-content;
   margin: 1rem auto;
+  padding: 0.5rem;
+  border: 1px solid var(--color_3);
+  border-radius: 5px;
 }
 
 .searchForm input {
-  background-color: var(--color_3);
-  border: none;
-  border-radius: 3px;
+  background-color: transparent; 
   padding: 0.5rem;
+  color: var(--color_1);
+  border: none;
 }
 
 .searchForm button {
-  border: none;
-  border-radius: 3px;
-  padding: 0.5rem;
-  background-color: var(--color_3);
-  color: var(--color_5);
-  font-family: serif;
-  font-weight: 700;
-  font-size: smaller;
+  --primary: transparent;
+  --secondary: var(--color_1);
+  --highlight: var(--color_4);
 }
 
-.searchResults li {
-  margin: 0.5rem;
-  background-color: var(--color_3);
+.searchString {
+  text-align: center;
+  font-size: x-large;
 }
 
 .addBookForm {
+  display: grid;
+  grid-template: min-content / min-content auto;
+  grid-gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--color_3);
+  box-shadow: 0 2px 4px 0 #00000080;
+}
+
+.addBookForm .sendData {
+  display: none;
+}
+
+.addBookForm img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  background-color: var(--color_5);
+  color: var(--color_5);
+  border-radius: 5px;
+}
+
+.addBookForm img::before {
+  display: block;
+  width: 5rem;
+}
+
+.displayDataTitle {
   display: flex;
   align-items: flex-start;
 }
 
-.addBookForm fieldset {
-  border: none;
+.displayDataDesc {
   display: flex;
   flex-wrap: wrap;
+  font-size: small;
 }
 
-.addBookForm input {
+.addBookForm p {
+  --primary: var(--color_1);
+  margin: 0 0.5rem 0.1rem 0;
+  color: var(--primary);
+}
+
+.addBookForm .title {
+  --primary: var(--color_8);
   padding: 0.5rem;
-  margin: 0 0.5rem 0.5rem 0;
-  background-color: var(--color_5);
-  color: var(--color_3);
-  border: none;
+  margin-bottom: 0.5rem;
+  width: max-content;
+  border: 1px solid var(--primary);
+  border-radius: 5px;
+  font-family: serif;
+}
+
+.addBookButton {
+  --primary: var(--color_5);
+  --secondary: var(--color_1);
+  --highlight: var(--color_1);
+}
+
+.addBookButton:hover {
+  color: var(--color_5);
 }

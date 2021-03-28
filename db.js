@@ -17,11 +17,15 @@ const Schema = mongoose.Schema;
 const bookSchema = new Schema({
   id: String,
   title: String,
+  subtitle: String,
   authors: String,
   publisher: String,
   pageCount: String,
   language: String,
   thumbnail: String,
+  readingStart: String,
+  readingEnd: String,
+  readTime: String
 });
 
 const Book = mongoose.model("Book", bookSchema);
